@@ -19,12 +19,12 @@
   width: 100%;
 }
 
-.form-input {
+form .form-input {
   border: 0.5px solid #41197f;
   border-radius: 5px;
 }
 
-.form-input::placeholder {
+form .form-input::placeholder {
   color: #41197f;
   font-family: Epilogue , sans-serif;
   font-size: 14px;
@@ -45,7 +45,7 @@ form {
 }
 
 form div {
-  width: 60%;
+  width: 70%;
 }
 
 form h1 {
@@ -72,5 +72,5 @@ form h1 {
 .btn-login:disabled {
   background-color: #fcc436;
   color: white;
-  opacity: 0.8;
+  opacity: 0.9;
 }
