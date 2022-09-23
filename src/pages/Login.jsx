@@ -21,6 +21,9 @@ function Login() {
     };
     console.log(userInfo);
     history.push('/meals');
+    localStorage.setItem('user', JSON.stringify(userInfo));
+    localStorage.setItem('mealsToken', JSON.stringify(1));
+    localStorage.setItem('drinksToken', JSON.stringify(1));
   };
 
   return (
