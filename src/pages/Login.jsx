@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import '../styles/Login.css';
 
 function Login() {
   const history = useHistory();
@@ -27,31 +28,45 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login-page-container">
+      <div className="container" />
+      <div className="img-container" />
       <form onSubmit={ handleSubmit }>
-        <input
-          type="text"
-          data-testid="email-input"
-          placeholder="Nome"
-          name="email"
-          value={ email }
-          onChange={ ({ target }) => setEmail(target.value) }
-        />
-        <input
-          type="password"
-          data-testid="password-input"
-          placeholder="Nome"
-          name="password"
-          value={ password }
-          onChange={ ({ target }) => setPassword(target.value) }
-        />
-        <button
-          type="submit"
-          data-testid="login-submit-btn"
-          disabled={ validateInpiuts() }
-        >
-          Entrar
-        </button>
+        <h1>LOGIN</h1>
+        <div>
+          <input
+            type="text"
+            className="form-control form-input"
+            data-testid="email-input"
+            id="email-input"
+            placeholder="Nome"
+            name="email"
+            value={ email }
+            onChange={ ({ target }) => setEmail(target.value) }
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            className="form-control form-input"
+            id="password-input"
+            data-testid="password-input"
+            placeholder="Senha"
+            name="password"
+            value={ password }
+            onChange={ ({ target }) => setPassword(target.value) }
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            className="btn-login"
+            data-testid="login-submit-btn"
+            disabled={ validateInpiuts() }
+          >
+            Entrar
+          </button>
+        </div>
       </form>
     </div>
   );
