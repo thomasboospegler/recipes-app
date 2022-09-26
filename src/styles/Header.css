@@ -4,14 +4,14 @@ header {
   flex-direction: column;
   justify-content: space-between;
   left: 0;
-  right: 0;
   position: fixed;
+  right: 0;
   top: 0;
   z-index: 1;
 }
 
 header div button {
-  background-color: #FCDC36;
+  background-color: #fcdc36;
   border: none;
   cursor: pointer;
   width: 30px;
@@ -19,10 +19,10 @@ header div button {
 
 .header-container {
   align-items: center;
-  background-color: #FCDC36;
+  background-color: #fcdc36;
   display: flex;
-  justify-content: space-around;
   height: 52px;
+  justify-content: space-around;
   width: 100%;
 }
 
@@ -43,8 +43,8 @@ header div button {
 }
 
 .title-container h1 {
-  color: #41197F;
-  font-family: 'Epilogue', sans-serif;
+  color: #41197f;
+  font-family: Epilogue , sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 900;
@@ -62,10 +62,10 @@ header div button {
 }
 
 .search-container input {
-  background: #FFFFFF;
-  border: 1px solid #B1B1B1;
+  background: white;
+  border: 1px solid #b1b1b1;
   border-radius: 5px;
-  padding: 20px;
   height: 30px;
+  padding: 20px;
   width: 90vw;
 }
