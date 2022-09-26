@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { string, bool } from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import searchIcon from '../images/IconePesquisar.svg';
+import profileIcon from '../images/icone-perfil.svg';
+import logo from '../images/icone.svg';
+import logo2 from '../images/icone2.svg';
+import '../styles/Header.css';
 
 function Header(props) {
   const { title, isSearchIcon } = props;
@@ -9,31 +14,35 @@ function Header(props) {
 
   return (
     <header>
-      <div>
-        <img src="../images/icone.svg" alt="Logo" />
-        <img src="../images/icone2.svg" alt="Logo2" />
-        { isSearchIcon && (
-          <button type="button" onClick={ () => setIsSearchActive(!isSearchActive) }>
+      <div className="header-container">
+        <div>
+          <img src={ logo } alt="Logo" />
+          <img src={ logo2 } alt="Logo2" />
+        </div>
+        <div>
+          { isSearchIcon && (
+            <button type="button" onClick={ () => setIsSearchActive(!isSearchActive) }>
+              <img
+                data-testid="search-top-btn"
+                src={ searchIcon }
+                alt="Search"
+              />
+            </button>
+          )}
+          <button type="button" onClick={ () => history.push('/profile') }>
             <img
-              data-testid="search-top-btn"
-              src="../images/searchIcon.svg"
-              alt="Search Icon"
+              data-testid="profile-top-btn"
+              src={ profileIcon }
+              alt="Profile"
             />
           </button>
-        )}
-        <button type="button" onClick={ () => history.push('/profile') }>
-          <img
-            data-testid="profile-top-btn"
-            src="../images/profileIcon.svg"
-            alt="Profile Icon"
-          />
-        </button>
+        </div>
       </div>
-      <div>
+      <div className="title-container">
         <h1 data-testid="page-title">{title}</h1>
       </div>
       { isSearchActive && (
-        <div>
+        <div className="search-container">
           <input
             data-testid="search-input"
             type="text"
