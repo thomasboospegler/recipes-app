@@ -6,7 +6,7 @@ import profileIcon from '../images/icone-perfil.svg';
 import logo from '../images/icone.svg';
 import logo2 from '../images/icone2.svg';
 import '../styles/Header.css';
-import Search from './Search';
+import SearchBar from './SearchBar';
 
 function Header(props) {
   const { title, isSearchIcon } = props;
@@ -50,7 +50,7 @@ function Header(props) {
       <div className="title-container">
         <h1 data-testid="page-title">{title}</h1>
       </div>
-      { isSearchActive && <Search /> }
+      { isSearchActive && <SearchBar /> }
     </header>
   );
 }

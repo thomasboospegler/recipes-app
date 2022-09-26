@@ -10,7 +10,6 @@ export default function Card({ recipe, index, recipeType }) {
       </div>
     );
   }
-  console.log(recipe);
   return (
     <div data-testid={ `${index}-recipe-card` }>
       <img data-testid={ `${index}-card-img` } src={ recipe.strMealThumb } alt="" />
