@@ -6,6 +6,7 @@ import profileIcon from '../images/icone-perfil.svg';
 import logo from '../images/icone.svg';
 import logo2 from '../images/icone2.svg';
 import '../styles/Header.css';
+import Search from './Search';
 
 function Header(props) {
   const { title, isSearchIcon } = props;
@@ -21,7 +22,11 @@ function Header(props) {
         </div>
         <div>
           { isSearchIcon && (
-            <button type="button" onClick={ () => setIsSearchActive(!isSearchActive) }>
+            <button
+              className="button-header"
+              type="button"
+              onClick={ () => setIsSearchActive(!isSearchActive) }
+            >
               <img
                 data-testid="search-top-btn"
                 src={ searchIcon }
@@ -29,7 +34,11 @@ function Header(props) {
               />
             </button>
           )}
-          <button type="button" onClick={ () => history.push('/profile') }>
+          <button
+            className="button-header"
+            type="button"
+            onClick={ () => history.push('/profile') }
+          >
             <img
               data-testid="profile-top-btn"
               src={ profileIcon }
@@ -41,14 +50,7 @@ function Header(props) {
       <div className="title-container">
         <h1 data-testid="page-title">{title}</h1>
       </div>
-      { isSearchActive && (
-        <div className="search-container">
-          <input
-            data-testid="search-input"
-            type="text"
-            placeholder="Buscar Receita"
-          />
-        </div>)}
+      { isSearchActive && <Search /> }
     </header>
   );
 }

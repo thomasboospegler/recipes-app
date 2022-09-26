@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-// import a from './a';
+import searchInfo from './searchInfo';
 
-const rootReducer = combineReducers({ });
+const rootReducer = combineReducers({ searchInfo });
 
 export default rootReducer;

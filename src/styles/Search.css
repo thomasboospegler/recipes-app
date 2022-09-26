@@ -1,0 +1,21 @@
+.search-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-container input[type='text'] {
+  background: white;
+  border: 1px solid #b1b1b1;
+  border-radius: 5px;
+  height: 30px;
+  padding: 20px;
+  width: 90vw;
+}
+
+/* .radio-input-container {
+
+} */

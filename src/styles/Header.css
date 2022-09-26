@@ -3,14 +3,10 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
   z-index: 1;
 }
 
-header div button {
+.button-header {
   background-color: #fcdc36;
   border: none;
   cursor: pointer;
@@ -51,21 +47,4 @@ header div button {
   letter-spacing: 0.105em;
   line-height: 20px;
   text-transform: uppercase;
-}
-
-.search-container {
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  width: 100%;
-}
-
-.search-container input {
-  background: white;
-  border: 1px solid #b1b1b1;
-  border-radius: 5px;
-  height: 30px;
-  padding: 20px;
-  width: 90vw;
 }
