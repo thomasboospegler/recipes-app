@@ -20,7 +20,6 @@ function Login() {
     const userInfo = {
       email,
     };
-    console.log(userInfo);
     history.push('/meals');
     localStorage.setItem('user', JSON.stringify(userInfo));
     localStorage.setItem('mealsToken', JSON.stringify(1));
