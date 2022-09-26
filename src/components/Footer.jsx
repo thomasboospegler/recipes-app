@@ -12,6 +12,7 @@ function Footer() {
       <button
         type="button"
         onClick={ () => history.push('/drinks') }
+        className="btn-footer"
       >
         <img
           src={ drinkIcon }
@@ -22,6 +23,7 @@ function Footer() {
       <button
         type="button"
         onClick={ () => history.push('/meals') }
+        className="btn-footer"
       >
         <img
           src={ mealIcon }
