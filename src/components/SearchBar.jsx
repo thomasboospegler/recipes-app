@@ -9,6 +9,7 @@ export default function Search() {
 
   const handleSubmit = () => {
     if (radioValue === 'first letter' && inputValue.length > 1) {
+      setInputValue('');
       return global.alert('Your search must have only 1 (one) character');
     }
     const saveInfo = {
@@ -17,6 +18,7 @@ export default function Search() {
     };
     const dispatchTest = () => dispatch({ type: 'SAVE_FETCH_INFO', saveInfo });
     dispatchTest();
+    setInputValue('');
   };
 
   return (

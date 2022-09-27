@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import { fetchResponseIngredient, fetchResponseName,
   fetchResponseFirstLetter } from './mocks/fetchDrinksResponse';
@@ -65,22 +66,50 @@ describe('Test the Drinks Page', () => {
     });
   });
 
-  it('tests the drinks page with no results on search', async () => {
+  it('testes the filters', async () => {
     const initialState = {
       searchInfo: {
-        radioValue: 'name',
-        inputValue: 'aaaa',
+        radioValue: '',
+        inputValue: '',
       },
     };
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue([]),
+      json: jest.fn().mockResolvedValue({
+        drinks: [
+          {
+            strCategory: 'Ordinary Drink',
+          },
+          {
+            strCategory: 'Cocktail',
+          },
+          {
+            strCategory: 'Shake',
+          },
+          {
+            strCategory: 'Other/Unknown',
+          },
+          {
+            strCategory: 'Cocoa',
+          },
+        ],
+      }),
     });
     const { history } = renderWithRouterAndRedux(<App />, initialState, path);
     expect(history.location.pathname).toBe(path);
 
+    const allFiltersButton = screen.getByTestId('All-category-filter');
+    expect(allFiltersButton).toBeInTheDocument();
+
+    userEvent.click(allFiltersButton);
+
     await waitFor(() => {
-      const card = screen.queryByTestId('0-recipe-card');
-      expect(card).not.toBeInTheDocument();
+      const ordinaryFilterButton = screen.getByTestId('Ordinary Drink-category-filter');
+      expect(ordinaryFilterButton).toBeInTheDocument();
+
+      const cocktailFilterButton = screen.getByTestId('Cocktail-category-filter');
+      expect(cocktailFilterButton).toBeInTheDocument();
+
+      userEvent.click(cocktailFilterButton);
     });
   });
 });

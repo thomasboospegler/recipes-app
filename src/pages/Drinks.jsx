@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import Card from '../components/Card';
 import Header from '../components/Header';
 import fetchApi from '../services/fetchApi';
 import Footer from '../components/Footer';
+import Filters from '../components/Filters';
+import Recipes from '../components/Recipes';
 
 export default function Drinks() {
   const fetchInfo = useSelector((state) => state.searchInfo);
@@ -39,26 +40,17 @@ export default function Drinks() {
       callApi(url);
       break;
     }
-    default: console.log('caso default');
+    default: {
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      callApi(url);
+    }
     }
   }, [fetchInfo, history]);
   return (
     <main>
       <Header title="Drinks" isSearchIcon />
-      <section className="cards-container">
-        { drinksList.map((drink, index) => {
-          const maxIndex = 12;
-
-          if (index >= maxIndex) return null;
-
-          return (<Card
-            key={ index }
-            recipe={ drink }
-            index={ index }
-            recipeType="Drink"
-          />);
-        })}
-      </section>
+      <Filters title="Drinks" setList={ setDrinksList } />
+      <Recipes list={ drinksList } recipeType="Drink" />
       <Footer />
     </main>
   );
