@@ -9,9 +9,13 @@ footer {
 }
 
 .btn-footer {
-  background: #fcc436;
+  background: #41197f;
   border: none;
   border-radius: 50%;
-  padding: 8px;
+  height: 52px;
 }
 
+footer button img {
+  width: 60px;
+  height: 35px;
+}
