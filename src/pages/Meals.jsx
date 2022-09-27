@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import Card from '../components/Card';
 import Header from '../components/Header';
 import fetchApi from '../services/fetchApi';
 import Footer from '../components/Footer';
 import '../styles/Meals.css';
+import Filters from '../components/Filters';
+import Recipes from '../components/Recipes';
 
 function Meals() {
   const fetchInfo = useSelector((state) => state.searchInfo);
@@ -49,20 +50,8 @@ function Meals() {
   return (
     <main>
       <Header title="Meals" isSearchIcon />
-      <section className="cards-container">
-        { mealsList.map((meal, index) => {
-          const maxIndex = 12;
-
-          if (index >= maxIndex) return null;
-
-          return (<Card
-            key={ index }
-            recipe={ meal }
-            index={ index }
-            recipeType="Meal"
-          />);
-        })}
-      </section>
+      <Filters title="Meals" setList={ setMealsList } />
+      <Recipes list={ mealsList } recipeType="Meal" />
       <Footer />
     </main>
   );

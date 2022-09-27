@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import { fetchResponseIngredient, fetchResponseName,
   fetchResponseFirstLetter } from './mocks/fetchMealsResponse';
@@ -65,22 +66,50 @@ describe('Test the Meals Page', () => {
     });
   });
 
-  it('tests the meals page with no results on search', async () => {
+  it('testes the filters', async () => {
     const initialState = {
       searchInfo: {
-        radioValue: 'name',
-        inputValue: 'aaaa',
+        radioValue: '',
+        inputValue: '',
       },
     };
     jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue([]),
+      json: jest.fn().mockResolvedValue({
+        meals: [
+          {
+            strCategory: 'Beef',
+          },
+          {
+            strCategory: 'Breakfast',
+          },
+          {
+            strCategory: 'Chicken',
+          },
+          {
+            strCategory: 'Dessert',
+          },
+          {
+            strCategory: 'Goat',
+          },
+        ],
+      }),
     });
     const { history } = renderWithRouterAndRedux(<App />, initialState, path);
     expect(history.location.pathname).toBe(path);
 
+    const allFiltersButton = screen.getByTestId('All-category-filter');
+    expect(allFiltersButton).toBeInTheDocument();
+
+    userEvent.click(allFiltersButton);
+
     await waitFor(() => {
-      const card = screen.queryByTestId('0-recipe-card');
-      expect(card).not.toBeInTheDocument();
+      const beefFilterButton = screen.getByTestId('Beef-category-filter');
+      expect(beefFilterButton).toBeInTheDocument();
+
+      const breakfastFilterButton = screen.getByTestId('Breakfast-category-filter');
+      expect(breakfastFilterButton).toBeInTheDocument();
+
+      userEvent.click(beefFilterButton);
     });
   });
 });
