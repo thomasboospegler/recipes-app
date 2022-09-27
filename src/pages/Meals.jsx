@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Header from '../components/Header';
 import fetchApi from '../services/fetchApi';
 import Footer from '../components/Footer';
+import '../styles/Meals.css';
 
 function Meals() {
   const fetchInfo = useSelector((state) => state.searchInfo);
@@ -45,18 +46,20 @@ function Meals() {
   return (
     <main>
       <Header title="Meals" isSearchIcon />
-      { mealsList.map((meal, index) => {
-        const maxIndex = 12;
+      <section className="cards-container">
+        { mealsList.map((meal, index) => {
+          const maxIndex = 12;
 
-        if (index >= maxIndex) return null;
+          if (index >= maxIndex) return null;
 
-        return (<Card
-          key={ index }
-          recipe={ meal }
-          index={ index }
-          recipeType="Meal"
-        />);
-      })}
+          return (<Card
+            key={ index }
+            recipe={ meal }
+            index={ index }
+            recipeType="Meal"
+          />);
+        })}
+      </section>
       <Footer />
     </main>
   );

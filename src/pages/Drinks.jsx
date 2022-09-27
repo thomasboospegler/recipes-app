@@ -45,18 +45,20 @@ export default function Drinks() {
   return (
     <main>
       <Header title="Drinks" isSearchIcon />
-      { drinksList.map((drink, index) => {
-        const maxIndex = 12;
+      <section className="cards-container">
+        { drinksList.map((drink, index) => {
+          const maxIndex = 12;
 
-        if (index >= maxIndex) return null;
+          if (index >= maxIndex) return null;
 
-        return (<Card
-          key={ index }
-          recipe={ drink }
-          index={ index }
-          recipeType="Drink"
-        />);
-      })}
+          return (<Card
+            key={ index }
+            recipe={ drink }
+            index={ index }
+            recipeType="Drink"
+          />);
+        })}
+      </section>
       <Footer />
     </main>
   );
