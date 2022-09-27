@@ -1,0 +1,21 @@
+footer {
+  background: #41197f;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 30px;
+  position: fixed;
+  width: 100%;
+}
+
+.btn-footer {
+  background: #41197f;
+  border: none;
+  border-radius: 50%;
+  height: 52px;
+}
+
+footer button img {
+  height: 35px;
+  width: 60px;
+}
