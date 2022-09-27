@@ -23,6 +23,7 @@ export default function Search() {
     <div className="search-container">
       <div>
         <input
+          className="search-input"
           data-testid="search-input"
           type="text"
           placeholder="Buscar Receita"
@@ -30,49 +31,52 @@ export default function Search() {
           onChange={ ({ target }) => setInputValue(target.value) }
         />
       </div>
-      <div className="radio-input-container">
-        <label htmlFor="ingredient">
-          <input
-            data-testid="ingredient-search-radio"
-            type="radio"
-            id="ingredient"
-            name="radio-input"
-            value="ingredient"
-            onClick={ ({ target }) => setRadioValue(target.value) }
-          />
-          Ingredient
-        </label>
-        <label htmlFor="name">
-          <input
-            data-testid="name-search-radio"
-            type="radio"
-            id="name"
-            name="radio-input"
-            value="name"
-            onClick={ ({ target }) => setRadioValue(target.value) }
-          />
-          Name
-        </label>
-        <label htmlFor="first-letter">
-          <input
-            data-testid="first-letter-search-radio"
-            type="radio"
-            id="first-letter"
-            name="radio-input"
-            value="first letter"
-            onClick={ ({ target }) => setRadioValue(target.value) }
-          />
-          First letter
-        </label>
-      </div>
-      <div>
-        <button
-          onClick={ handleSubmit }
-          data-testid="exec-search-btn"
-          type="button"
-        >
-          Search
-        </button>
+      <div className="search-second-container">
+        <div className="radio-input-container">
+          <label htmlFor="ingredient">
+            <input
+              data-testid="ingredient-search-radio"
+              type="radio"
+              id="ingredient"
+              name="radio-input"
+              value="ingredient"
+              onClick={ ({ target }) => setRadioValue(target.value) }
+            />
+            <span>Ingredient</span>
+          </label>
+          <label htmlFor="name">
+            <input
+              data-testid="name-search-radio"
+              type="radio"
+              id="name"
+              name="radio-input"
+              value="name"
+              onClick={ ({ target }) => setRadioValue(target.value) }
+            />
+            <span>Name</span>
+          </label>
+          <label htmlFor="first-letter">
+            <input
+              data-testid="first-letter-search-radio"
+              type="radio"
+              id="first-letter"
+              name="radio-input"
+              value="first letter"
+              onClick={ ({ target }) => setRadioValue(target.value) }
+            />
+            <span>First letter</span>
+          </label>
+        </div>
+        <div>
+          <button
+            className="search-button"
+            onClick={ handleSubmit }
+            data-testid="exec-search-btn"
+            type="button"
+          >
+            Search
+          </button>
+        </div>
       </div>
     </div>
   );
