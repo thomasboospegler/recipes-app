@@ -33,8 +33,11 @@ header {
   align-items: center;
   border: none;
   display: flex;
-  height: 100px;
+  flex-direction: column;
+  gap: 15px;
+  height: 70px;
   justify-content: center;
+  margin-top: 20px;
   width: 100%;
 }
 
@@ -47,4 +50,9 @@ header {
   letter-spacing: 0.105em;
   line-height: 20px;
   text-transform: uppercase;
+}
+
+.page-icon {
+  height: 35px;
+  width: 45px;
 }

@@ -32,4 +32,28 @@ describe('Test the component Header', () => {
     userEvent.click(profileIcon);
     expect(history.location.pathname).toBe('/profile');
   });
+
+  it('tests the icons of the pages', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+
+    history.push('/meals');
+    const mealsIcon = screen.getByTestId('page-icon-Meals');
+    expect(mealsIcon).toBeInTheDocument();
+
+    history.push('/drinks');
+    const drinksIcon = screen.getByTestId('page-icon-Drinks');
+    expect(drinksIcon).toBeInTheDocument();
+
+    history.push('/profile');
+    const profileIcon = screen.getByTestId('page-icon-Profile');
+    expect(profileIcon).toBeInTheDocument();
+
+    history.push('/done-recipes');
+    const doneRecipesIcon = screen.getByTestId('page-icon-Done Recipes');
+    expect(doneRecipesIcon).toBeInTheDocument();
+
+    history.push('/favorite-recipes');
+    const favoriteRecipesIcon = screen.getByTestId('page-icon-Favorite Recipes');
+    expect(favoriteRecipesIcon).toBeInTheDocument();
+  });
 });
