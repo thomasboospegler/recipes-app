@@ -19,7 +19,6 @@ export default function Meal({ match }) {
     const callApi = async () => {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const data = await fetchApi(url);
-      console.log(data.meals);
       const { strMealThumb, strMeal, strCategory,
         strInstructions, strYoutube } = data.meals[0];
       const maxlength = 20;

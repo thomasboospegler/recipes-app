@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { shape, string } from 'prop-types';
 import '../styles/RecipeDetails.css';
+import fetchApi from '../services/fetchApi';
+import Card from './Card';
 
-export default function RecipesDetails({ recipe }) {
+export default function RecipesDetails({ recipe, recipeType }) {
+  const [recomended, setRecomended] = useState([]);
+
+  useEffect(() => {
+    const callApi = async () => {
+      if (recipeType === 'Meal') {
+        const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        const data = await fetchApi(url);
+        setRecomended(data.drinks);
+      }
+      if (recipeType === 'Drink') {
+        const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+        const data = await fetchApi(url);
+        setRecomended(data.meals);
+      }
+    };
+    callApi();
+  }, [recipeType]);
   return (
     <section className="recipe-details-container">
       <div className="recipe-details-img-container">
@@ -39,6 +58,18 @@ export default function RecipesDetails({ recipe }) {
           />
         </div>
       )}
+      { recomended.map((recomedRecipe, index) => {
+        const maxIndex = 5;
+
+        if (index >= maxIndex) return null;
+
+        return (<Card
+          key={ index }
+          recipe={ recomedRecipe }
+          index={ index }
+          recipeType={ recipeType === 'Meal' ? 'Drink' : 'Meal' }
+        />);
+      })}
     </section>
   );
 }
@@ -47,5 +78,5 @@ RecipesDetails.propTypes = {
   recipe: shape({
     strMealThumb: string,
   }).isRequired,
-  // recipeType: string.isRequired,
+  recipeType: string.isRequired,
 };
