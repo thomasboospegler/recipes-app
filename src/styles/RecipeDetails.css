@@ -1,0 +1,27 @@
+.recipe-details-container {
+
+}
+
+.recipe-details-img-container {
+  position: relative;
+  top: 0;
+  width: 100vw;
+  z-index: 0;
+}
+
+.recipe-details-img-container img {
+  width: 100vw;
+}
+
+.recipe-header {
+  display: flex;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+iframe {
+  width: 100vw;
+  height: 300px;
+}
