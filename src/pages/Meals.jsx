@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import fetchApi from '../services/fetchApi';
+import Footer from '../components/Footer';
 
 function Meals() {
   const fetchInfo = useSelector((state) => state.searchInfo);
@@ -56,6 +57,7 @@ function Meals() {
           recipeType="Meal"
         />);
       })}
+      <Footer />
     </main>
   );
 }
