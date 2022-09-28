@@ -13,15 +13,19 @@ export default function Meal({ match }) {
     ingredients: [],
     instructions: '',
     video: '',
+    id: '',
+    isRecipeDone: false,
+    isRecipeInProgress: false,
+    area: '',
   });
 
   useEffect(() => {
+    const maxlength = 20;
     const callApi = async () => {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const data = await fetchApi(url);
       const { strMealThumb, strMeal, strCategory,
-        strInstructions, strYoutube } = data.meals[0];
-      const maxlength = 20;
+        strInstructions, strYoutube, strArea } = data.meals[0];
       const ingredientKeys = [];
       const measureKeys = [];
       for (let index = 1; index <= maxlength; index += 1) {
@@ -36,6 +40,17 @@ export default function Meal({ match }) {
           const ingredient = data.meals[0][ingredientKey];
           return `${measure} - ${ingredient}`;
         });
+      const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const isRecipeDone = getDoneRecipes ? getDoneRecipes
+        .some((recipe) => +recipe.id === +id) : false;
+      const getInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const isProggresListValid = getInProgressRecipes !== null;
+      const isProgressKeysValid = isProggresListValid
+        ? Object.keys(getInProgressRecipes).length > 0 : false;
+      const keysInProgressList = isProggresListValid && isProgressKeysValid
+        ? Object.keys(getInProgressRecipes.meals) : false;
+      const isRecipeInProgress = keysInProgressList.length > 0 ? keysInProgressList
+        .some((recipeID) => +recipeID === +id) : false;
       setRecipeInfo({
         src: strMealThumb,
         title: strMeal,
@@ -43,6 +58,10 @@ export default function Meal({ match }) {
         ingredients: ingredientsList,
         instructions: strInstructions,
         video: strYoutube,
+        isRecipeDone,
+        isRecipeInProgress,
+        id,
+        area: strArea,
       });
     };
     callApi();

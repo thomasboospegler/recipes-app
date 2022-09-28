@@ -13,15 +13,18 @@ export default function Drink({ match }) {
     ingredients: [],
     instructions: '',
     video: '',
+    id: '',
+    isRecipeDone: false,
+    isRecipeInProgress: false,
+    area: '',
   });
 
   useEffect(() => {
     const callApi = async () => {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const data = await fetchApi(url);
-      console.log(data.drinks);
       const { strDrinkThumb, strDrink, strAlcoholic,
-        strInstructions } = data.drinks[0];
+        strInstructions, strArea, strCategory } = data.drinks[0];
       const maxlength = 20;
       const ingredientKeys = [];
       const measureKeys = [];
@@ -38,13 +41,29 @@ export default function Drink({ match }) {
           const ingredient = data.drinks[0][ingredientKey];
           return `${measure} - ${ingredient}`;
         });
+      const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      const isRecipeDone = getDoneRecipes ? getDoneRecipes
+        .some((recipe) => +recipe.id === +id) : false;
+      const getInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const isProggresListValid = getInProgressRecipes !== null;
+      const isProgressKeysValid = isProggresListValid
+        ? Object.keys(getInProgressRecipes).length > 0 : false;
+      const keysInProgressList = isProggresListValid && isProgressKeysValid
+        ? Object.keys(getInProgressRecipes.drinks) : false;
+      const isRecipeInProgress = keysInProgressList.length > 0 ? keysInProgressList
+        .some((recipeID) => +recipeID === +id) : false;
       setRecipeInfo({
         src: strDrinkThumb,
         title: strDrink,
-        category: strAlcoholic,
+        category: strCategory,
+        strAlcoholic,
         ingredients: ingredientsList,
         instructions: strInstructions,
         video: '',
+        isRecipeDone,
+        isRecipeInProgress,
+        id,
+        area: strArea,
       });
     };
     callApi();
