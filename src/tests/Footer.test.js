@@ -32,6 +32,10 @@ describe('Test the component Footer', () => {
   });
 
   it('test if the footer is displayed on the correct pages', () => {
+    const UserEmail = {
+      email: 'trybe@test.com',
+    };
+    localStorage.setItem('user', JSON.stringify(UserEmail));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/meals');
     const footerMeals = screen.getByTestId('footer');

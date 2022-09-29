@@ -13,6 +13,7 @@ export default function Recipes({ list, recipeType }) {
         return (<Card
           key={ index }
           recipe={ recipe }
+          recomended={ false }
           index={ index }
           recipeType={ recipeType }
         />);
