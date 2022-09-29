@@ -1,27 +1,27 @@
 .img-title {
-  width: 100vw;
-  height: 30vh;
-  border-radius: 0px;
-  position: absolute;
+  border-radius: 0;
   filter: brightness(60%);
+  height: 30vh;
+  position: absolute;
+  width: 100vw;
 }
 
 .recipe-details-container {
-  margin: 0 20px;
+  color: #1a1b1c;
   display: flex;
   flex-direction: column;
-  gap: 30px;
   font-family: Epilogue , sans-serif;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  gap: 30px;
   line-height: 20px;
-  color: #1A1B1C;
+  margin: 0 20px;
 }
 
 .recipe-details-container h2 {
-  font-weight: 700;
   font-size: 23px;
+  font-weight: 700;
   line-height: 20px;
   margin-bottom: 15px;
 }
@@ -34,7 +34,7 @@
 }
 
 .recipe-header p {
-  color: #FCC436;
+  color: #fcc436;
   font-family: Epilogue , sans-serif;
   font-size: 17px;
   font-style: normal;
@@ -43,11 +43,11 @@
 }
 
 .recipe-title {
-  color: #FFFFFF;
+  color: white;
   font-family: Epilogue , sans-serif;
+  font-size: 30px;
   font-style: normal;
   font-weight: 900;
-  font-size: 30px;
   left: 35%;
   letter-spacing: 0.105em;
   line-height: 30px;
@@ -65,7 +65,7 @@
 }
 
 .ul-container {
-  border: 0.55px solid #B1B1B1;
+  border: 0.55px solid #b1b1b1;
   border-radius: 5.35px;
   padding: 15px 5px;
 }
@@ -75,7 +75,7 @@
 }
 
 .instructions-container p {
-  border: 0.55px solid #B1B1B1;
+  border: 0.55px solid #b1b1b1;
   border-radius: 5.35px;
   padding: 20px;
 }

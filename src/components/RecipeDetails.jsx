@@ -95,14 +95,22 @@ export default function RecipesDetails({ recipe, recipeType }) {
             className="recipe-top-btns"
             data-testid="share-btn"
             onClick={ () => {
-              copy(window.location.href);
+              copy(`http://localhost:3000${history.location.pathname}`);
               setCopied(true);
-              setTimeout(() => setCopied(false), megInterval);
+              setTimeout(() => {
+                setCopied(false);
+                console.log('timeOut');
+              }, megInterval);
             } }
           >
             <img src={ shareIcon } alt="Share icon" />
           </button>
-          { copied && <span>Link copied!</span>}
+          { copied && (
+            <span>
+              { console.log('qualquer coisa') }
+              Link copied!
+            </span>
+          )}
           <button
             type="button"
             className="recipe-top-btns"

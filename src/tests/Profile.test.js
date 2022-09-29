@@ -5,15 +5,6 @@ import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 
 describe('Profile tests', () => {
-  beforeEach(() => {
-    const UserEmail = {
-      email: 'trybe@test.com',
-    };
-    localStorage.setItem('user', JSON.stringify(UserEmail));
-  });
-  afterEach(() => {
-    localStorage.clear();
-  });
   const path = '/profile';
   const initialState = {
     searchInfo: {
@@ -47,6 +38,10 @@ describe('Profile tests', () => {
   });
 
   it('Test email', () => {
+    const UserEmail = {
+      email: 'trybe@test.com',
+    };
+    localStorage.setItem('user', JSON.stringify(UserEmail));
     const { history } = renderWithRouterAndRedux(<App />, initialState, path);
     const email = screen.getByTestId('profile-email');
     expect(email).toHaveTextContent('trybe@test.com');

@@ -12,8 +12,9 @@ function Profile() {
 
   useEffect(() => {
     const email = JSON.parse(localStorage.getItem('user'));
+    const isEmailValid = email !== null;
     console.log(email);
-    setEmailStoraged(email.email);
+    setEmailStoraged(isEmailValid ? email.email : 'Email not found');
   }, []);
   const history = useHistory();
 
@@ -24,7 +25,7 @@ function Profile() {
 
   return (
     <div>
-      <Header title="Profile" search="false" />
+      <Header title="Profile" isSearchIcon={ false } />
       <section className="profile-container">
         <h4 data-testid="profile-email">{ emailStoraged }</h4>
         <button
