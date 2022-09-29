@@ -7,6 +7,8 @@ import { fetchResponseIngredient } from './mocks/fetchMealsResponse';
 
 describe('Test the DetailsRecipe Page', () => {
   afterEach(() => jest.clearAllMocks());
+  const FAVORITE_BTN = 'favorite-btn';
+  const START_RECIPE_BTN = 'start-recipe-btn';
 
   it('tests the meals DetailsRecipe page', async () => {
     const path = '/meals/52771';
@@ -23,12 +25,12 @@ describe('Test the DetailsRecipe Page', () => {
       const card = screen.getByTestId('recipe-photo');
       const title = screen.getByTestId('recipe-title');
       const share = screen.getByTestId('share-btn');
-      const favorite = screen.getByTestId('favorite-btn');
+      const favorite = screen.getByTestId(FAVORITE_BTN);
       const category = screen.getByTestId('recipe-category');
       const instructions = screen.getByTestId('instructions');
       const video = screen.getByTestId('video');
       const ingredients = screen.getByTestId('0-ingredient-name-and-measure');
-      const start = screen.getByTestId('start-recipe-btn');
+      const start = screen.getByTestId(START_RECIPE_BTN);
 
       expect(card).toBeInTheDocument();
       expect(title).toBeInTheDocument();
@@ -62,11 +64,11 @@ describe('Test the DetailsRecipe Page', () => {
       const card = screen.getByTestId('recipe-photo');
       const title = screen.getByTestId('recipe-title');
       const share = screen.getByTestId('share-btn');
-      const favorite = screen.getByTestId('favorite-btn');
+      const favorite = screen.getByTestId(FAVORITE_BTN);
       const category = screen.getByTestId('recipe-category');
       const instructions = screen.getByTestId('instructions');
       const ingredients = screen.getByTestId('0-ingredient-name-and-measure');
-      const start = screen.getByTestId('start-recipe-btn');
+      const start = screen.getByTestId(START_RECIPE_BTN);
 
       expect(card).toBeInTheDocument();
       expect(title).toBeInTheDocument();
@@ -118,9 +120,9 @@ describe('Test the DetailsRecipe Page', () => {
     expect(history.location.pathname).toBe(path);
 
     await waitFor(() => {
-      const favorite = screen.getByTestId('favorite-btn');
+      const favorite = screen.getByTestId(FAVORITE_BTN);
       const share = screen.getByTestId('share-btn');
-      const start = screen.getByTestId('start-recipe-btn');
+      const start = screen.getByTestId(START_RECIPE_BTN);
 
       expect(favorite).toBeInTheDocument();
       expect(share).toBeInTheDocument();
