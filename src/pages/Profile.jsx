@@ -5,6 +5,7 @@ import Header from '../components/Header';
 
 function Profile() {
   const [emailStoraged, setEmailStoraged] = useState('');
+
   useEffect(() => {
     const email = JSON.parse(localStorage.getItem('user'));
     setEmailStoraged(email.email);
@@ -19,7 +20,7 @@ function Profile() {
   return (
     <div>
       <Header title="Profile" profile="true" search="false" />
-      <h4 data-testid="profile-email">{ `Your email: ${emailStoraged}` }</h4>
+      <h4 data-testid="profile-email">{ emailStoraged }</h4>
       <button
         type="button"
         data-testid="profile-done-btn"
