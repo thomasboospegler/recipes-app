@@ -101,6 +101,13 @@ export const fetchResponseIngredient = {
       idDrink: '16990',
     },
   ],
+  meals: [
+    {
+      strMeal: 'Apam balik',
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg',
+      idMeal: '53049',
+    },
+  ],
 };
 
 export const fetchResponseName = {

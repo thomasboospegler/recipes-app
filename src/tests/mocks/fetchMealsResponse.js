@@ -206,6 +206,13 @@ export const fetchResponseIngredient = {
       idMeal: '53062',
     },
   ],
+  drinks: [
+    {
+      strDrink: 'Baby Eskimo',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/wywrtw1472720227.jpg',
+      idDrink: '15511',
+    },
+  ],
 };
 
 export const fetchResponseName = {

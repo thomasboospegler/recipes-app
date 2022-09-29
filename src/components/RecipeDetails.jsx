@@ -77,96 +77,103 @@ export default function RecipesDetails({ recipe, recipeType }) {
     if (isRecipeFav) setIsFavorite(true);
   }, [recipeType, recipe.id]);
   return (
-    <section className="recipe-details-container">
-      <div className="recipe-details-img-container">
-        <img data-testid="recipe-photo" src={ recipe.src } alt="Recipe img" />
-      </div>
-      <div className="recipe-header">
-        <p data-testid="recipe-category">
-          { recipeType === 'Meal'
-            ? recipe.category : recipe.strAlcoholic }
-        </p>
-        <h1 data-testid="recipe-title">{ recipe.title }</h1>
-        <button
-          type="button"
-          className="recipe-top-btns"
-          data-testid="share-btn"
-          onClick={ () => {
-            copy(window.location.href);
-            setCopied(true);
-            setTimeout(() => setCopied(false), megInterval);
-          } }
-        >
-          <img src={ shareIcon } alt="Share icon" />
-        </button>
-        { copied && <span>Link copied!</span>}
-        <button
-          type="button"
-          className="recipe-top-btns"
-          onClick={ saveFavaorite }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ isFavorite ? redHeart : yellowHeart }
-            alt="Share icon"
-          />
-        </button>
-      </div>
-      <h3>Ingredients</h3>
-      <div>
-        <ul>
-          { recipe.ingredients.map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              { ingredient }
-            </li>
-          ))}
-        </ul>
-      </div>
-      <h3>Intructions</h3>
-      <div>
-        <p data-testid="instructions">{ recipe.instructions }</p>
-      </div>
-      { recipe.video && (
-        <div>
-          <h3>Video</h3>
-          <iframe
-            data-testid="video"
-            src={ recipe.video.replace('watch?v=', 'embed/') }
-            title="video"
-          />
+    <div>
+      <img
+        className="img-title"
+        data-testid="recipe-photo"
+        src={ recipe.src }
+        alt="Recipe img"
+      />
+      <section className="recipe-details-container">
+        <div className="recipe-header">
+          <p data-testid="recipe-category">
+            { recipeType === 'Meal'
+              ? recipe.category : recipe.strAlcoholic }
+          </p>
+          <button
+            type="button"
+            className="recipe-top-btns"
+            data-testid="share-btn"
+            onClick={ () => {
+              copy(window.location.href);
+              setCopied(true);
+              setTimeout(() => setCopied(false), megInterval);
+            } }
+          >
+            <img src={ shareIcon } alt="Share icon" />
+          </button>
+          { copied && <span>Link copied!</span>}
+          <button
+            type="button"
+            className="recipe-top-btns"
+            onClick={ saveFavaorite }
+          >
+            <img
+              data-testid="favorite-btn"
+              src={ isFavorite ? redHeart : yellowHeart }
+              alt="Share icon"
+            />
+          </button>
         </div>
-      )}
-      <div className="recomend-container">
-        <h3>Recomended</h3>
-        <div className="recomended">
-          { recomended.map((recomedRecipe, index) => {
-            const maxIndex = 6;
+        <h1 className="recipe-title" data-testid="recipe-title">{ recipe.title }</h1>
+        <div className="content-recipe-container">
+          <h2>Ingredients</h2>
+          <div className="ul-container">
+            <ul>
+              { recipe.ingredients.map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  { ingredient }
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="instructions-container">
+          <h2>Intructions</h2>
+          <p data-testid="instructions">{ recipe.instructions }</p>
+        </div>
+        { recipe.video && (
+          <div>
+            <h2>Video</h2>
+            <iframe
+              data-testid="video"
+              src={ recipe.video.replace('watch?v=', 'embed/') }
+              title="video"
+            />
+          </div>
+        )}
+        <div className="recomend-container">
+          <h2>Recomended</h2>
+          <div className="recomended">
+            { recomended.map((recomedRecipe, index) => {
+              const maxIndex = 6;
 
-            if (index >= maxIndex) return null;
-            return (<Card
-              key={ index }
-              recipe={ recomedRecipe }
-              recomended
-              index={ index }
-              recipeType={ recipeType === 'Meal' ? 'Drink' : 'Meal' }
-            />);
-          })}
+              if (index >= maxIndex) return null;
+              return (<Card
+                key={ index }
+                recipe={ recomedRecipe }
+                recomended
+                index={ index }
+                recipeType={ recipeType === 'Meal' ? 'Drink' : 'Meal' }
+              />);
+            })}
+          </div>
         </div>
-      </div>
-      { !recipe.isRecipeDone && (
-        <button
-          className="start-recipe-btn"
-          type="button"
-          data-testid="start-recipe-btn"
-          onClick={ () => history.push(path) }
-        >
-          {recipe.isRecipeInProgress ? 'Continue Recipe' : 'Start Recipe'}
-        </button>
-      )}
-    </section>
+        { !recipe.isRecipeDone && (
+          <button
+            className="start-recipe-btn"
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(path) }
+          >
+            {recipe.isRecipeInProgress ? 'Continue Recipe' : 'Start Recipe'}
+          </button>
+        )}
+      </section>
+    </div>
   );
 }
 
