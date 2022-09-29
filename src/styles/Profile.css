@@ -1,0 +1,38 @@
+.profile-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  height: 60vh;
+  justify-content: flex-start;
+}
+
+.profile-container h4 {
+  color: #1a1b1c;
+  font-weight: 700;
+  margin: 40px 0;
+}
+
+.profile-container button {
+  align-items: center;
+  background: none;
+  border: none;
+  color: #797d86;
+  display: flex;
+  font-weight: 500;
+  gap: 20px;
+  height: 100px;
+  justify-content: flex-start;
+  text-transform: capitalize;
+  width: 70%;
+}
+
+.profile-container button img {
+  width: 60px;
+}
+
+hr {
+  width: 70%;
+}
