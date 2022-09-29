@@ -24,6 +24,10 @@ describe('Test the component Header', () => {
   });
 
   it('tests if the profile icon redirect to /profile', () => {
+    const UserEmail = {
+      email: 'trybe@test.com',
+    };
+    localStorage.setItem('user', JSON.stringify(UserEmail));
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/meals');
 

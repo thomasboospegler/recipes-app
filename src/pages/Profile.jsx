@@ -12,6 +12,7 @@ function Profile() {
 
   useEffect(() => {
     const email = JSON.parse(localStorage.getItem('user'));
+    console.log(email);
     setEmailStoraged(email.email);
   }, []);
   const history = useHistory();
@@ -23,7 +24,7 @@ function Profile() {
 
   return (
     <div>
-      <Header title="Profile" profile="true" search="false" />
+      <Header title="Profile" search="false" />
       <section className="profile-container">
         <h4 data-testid="profile-email">{ emailStoraged }</h4>
         <button
