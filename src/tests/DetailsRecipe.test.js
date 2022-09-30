@@ -11,6 +11,7 @@ describe('Test the DetailsRecipe Page', () => {
   afterEach(() => jest.clearAllMocks());
   const FAVORITE_BTN = 'favorite-btn';
   const START_RECIPE_BTN = 'start-recipe-btn';
+  const START_BTN = 'Start Recipe';
 
   it('tests the meals DetailsRecipe page', async () => {
     const path = '/meals/52771';
@@ -43,7 +44,7 @@ describe('Test the DetailsRecipe Page', () => {
       expect(video).toBeInTheDocument();
       expect(ingredients).toBeInTheDocument();
       expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent('Start Recipe');
+      expect(start).toHaveTextContent();
 
       userEvent.click(favorite);
       userEvent.click(favorite);
@@ -130,7 +131,7 @@ describe('Test the DetailsRecipe Page', () => {
       expect(favorite).toBeInTheDocument();
       expect(share).toBeInTheDocument();
       expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent('Start Recipe');
+      expect(start).toHaveTextContent(START_BTN);
 
       userEvent.click(favorite);
       userEvent.click(favorite);
@@ -160,7 +161,7 @@ describe('Test the DetailsRecipe Page', () => {
 
       expect(favorite).toBeInTheDocument();
       expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent('Start Recipe');
+      expect(start).toHaveTextContent(START_BTN);
 
       userEvent.click(favorite);
       userEvent.click(favorite);
