@@ -135,12 +135,36 @@ describe('Test the DetailsRecipe Page', () => {
       userEvent.click(favorite);
       userEvent.click(favorite);
       userEvent.click(share);
-    });
 
-    // await waitFor(() => {
-    //   const linkTest = screen.getByText(/link/i);
-    //   expect(linkTest).toBeInTheDocument();
-    // });
+      const linkTest = screen.getByText(/link/i);
+      expect(linkTest).toBeInTheDocument();
+    });
+  });
+
+  it('tests the meals DetailsRecipe page with favorites meals in localStorage', async () => {
+    copy.mockImplementation(() => {});
+    const path = '/drinks/17203';
+    const initialState = {
+      searchInfo: {
+        radioValue: '',
+        inputValue: '',
+      },
+    };
+    localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    const { history } = renderWithRouterAndRedux(<App />, initialState, path);
+    expect(history.location.pathname).toBe(path);
+
+    await waitFor(() => {
+      const favorite = screen.getByTestId(FAVORITE_BTN);
+      const start = screen.getByTestId(START_RECIPE_BTN);
+
+      expect(favorite).toBeInTheDocument();
+      expect(start).toBeInTheDocument();
+      expect(start).toHaveTextContent('Start Recipe');
+
+      userEvent.click(favorite);
+      userEvent.click(favorite);
+    });
   });
 
   it('tests the recomended card of the drinks DetailsRecipe', async () => {

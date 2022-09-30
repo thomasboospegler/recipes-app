@@ -30,8 +30,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
     }
     const type = recipeType.toLowerCase();
     if (prevFavorites) {
-      setIsFavorite(true);
-      return localStorage.setItem('favoriteRecipes', JSON.stringify([
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
         ...prevFavorites,
         {
           id: recipe.id,
@@ -43,6 +42,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
           image: recipe.src,
         },
       ]));
+      return setIsFavorite(true);
     }
     localStorage.setItem('favoriteRecipes', JSON.stringify([
       {
@@ -98,10 +98,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
             onClick={ () => {
               copy(`http://localhost:3000${history.location.pathname}`);
               setCopied(true);
-              setTimeout(() => {
-                setCopied(false);
-                console.log('timeOut');
-              }, megInterval);
+              setTimeout(() => setCopied(false), megInterval);
             } }
           >
             <img src={ shareIcon } alt="Share icon" />
