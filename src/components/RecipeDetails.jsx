@@ -30,7 +30,8 @@ export default function RecipesDetails({ recipe, recipeType }) {
     }
     const type = recipeType.toLowerCase();
     if (prevFavorites) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
+      setIsFavorite(true);
+      return localStorage.setItem('favoriteRecipes', JSON.stringify([
         ...prevFavorites,
         {
           id: recipe.id,
