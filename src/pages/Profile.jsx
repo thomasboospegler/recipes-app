@@ -13,7 +13,6 @@ function Profile() {
   useEffect(() => {
     const email = JSON.parse(localStorage.getItem('user'));
     const isEmailValid = email !== null;
-    console.log(email);
     setEmailStoraged(isEmailValid ? email.email : 'Email not found');
   }, []);
   const history = useHistory();

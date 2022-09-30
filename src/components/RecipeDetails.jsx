@@ -42,6 +42,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
           image: recipe.src,
         },
       ]));
+      return setIsFavorite(true);
     }
     localStorage.setItem('favoriteRecipes', JSON.stringify([
       {
@@ -97,10 +98,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
             onClick={ () => {
               copy(`http://localhost:3000${history.location.pathname}`);
               setCopied(true);
-              setTimeout(() => {
-                setCopied(false);
-                console.log('timeOut');
-              }, megInterval);
+              setTimeout(() => setCopied(false), megInterval);
             } }
           >
             <img src={ shareIcon } alt="Share icon" />
