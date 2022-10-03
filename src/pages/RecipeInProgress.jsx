@@ -175,7 +175,7 @@ export default function InProgressRecipe({ recipe, recipeType }) {
           <p data-testid="instructions">{ recipe.instructions }</p>
         </div>
         { recipe.video && (
-          <div>
+          <div className="video-container">
             <h2>Video</h2>
             <iframe
               data-testid="video"
