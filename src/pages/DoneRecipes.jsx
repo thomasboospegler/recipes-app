@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import shareIcon from '../images/shareIcon.svg';
 
 export default function DoneRecipes() {
@@ -11,9 +10,13 @@ export default function DoneRecipes() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const addDoneStoraged = JSON.parse(localStorage.getItem('doneRecipes'));
-    setRecipeStoraged(addDoneStoraged);
-    setFilteredDoneRecipes(addDoneStoraged);
+    const getDoneStoraged = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (getDoneStoraged !== null && getDoneStoraged.length > 0) {
+      setRecipeStoraged(getDoneStoraged);
+      return setFilteredDoneRecipes(getDoneStoraged);
+    }
+    setRecipeStoraged([]);
+    setFilteredDoneRecipes([]);
   }, []);
 
   const filterDoneRecipes = (filterType) => {
@@ -142,7 +145,6 @@ export default function DoneRecipes() {
           </div>
         );
       })}
-      <Footer />
     </div>
   );
 }
