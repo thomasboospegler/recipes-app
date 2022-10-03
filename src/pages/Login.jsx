@@ -24,7 +24,28 @@ function Login() {
     localStorage.setItem('user', JSON.stringify(userInfo));
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('drinksToken', JSON.stringify(1));
-    localStorage.setItem('doneRecipes', JSON.stringify([]));
+    localStorage.setItem('doneRecipes', JSON.stringify([
+      { id: '53060',
+        type: 'meal',
+        nationality: 'Croatian',
+        category: 'Side',
+        alcoholicOrNot: '',
+        name: 'Burek',
+        image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+        tags: [],
+        doneDate: new Date().toLocaleDateString(),
+      },
+      { id: '53060',
+        type: 'meal',
+        nationality: 'Croatian',
+        category: 'Side',
+        alcoholicOrNot: '',
+        name: 'Burek',
+        image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+        tags: [],
+        doneDate: new Date().toLocaleDateString(),
+      },
+    ]));
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     localStorage.setItem('inProgressRecipes', JSON.stringify({}));
   };
