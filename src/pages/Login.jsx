@@ -25,25 +25,27 @@ function Login() {
     localStorage.setItem('mealsToken', JSON.stringify(1));
     localStorage.setItem('drinksToken', JSON.stringify(1));
     localStorage.setItem('doneRecipes', JSON.stringify([
-      { id: '53060',
+      {
+        id: '52771',
         type: 'meal',
-        nationality: 'Croatian',
-        category: 'Side',
+        nationality: 'Italian',
+        category: 'Vegetarian',
         alcoholicOrNot: '',
-        name: 'Burek',
-        image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
-        tags: [],
-        doneDate: new Date().toLocaleDateString(),
+        name: 'Spicy Arrabiata Penne',
+        image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+        doneDate: '23/06/2020',
+        tags: ['Pasta', 'Curry'],
       },
-      { id: '53060',
-        type: 'meal',
-        nationality: 'Croatian',
-        category: 'Side',
-        alcoholicOrNot: '',
-        name: 'Burek',
-        image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+      {
+        id: '178319',
+        type: 'drink',
+        nationality: '',
+        category: 'Cocktail',
+        alcoholicOrNot: 'Alcoholic',
+        name: 'Aquamarine',
+        image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+        doneDate: '23/06/2020',
         tags: [],
-        doneDate: new Date().toLocaleDateString(),
       },
     ]));
     localStorage.setItem('favoriteRecipes', JSON.stringify([]));
