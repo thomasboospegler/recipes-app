@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { shape, string } from 'prop-types';
+import { bool, shape, string } from 'prop-types';
 import RecipeDetails from '../components/RecipeDetails';
+import InProgressRecipe from './RecipeInProgress';
 import fetchApi from '../services/fetchApi';
 
-export default function Drink({ match }) {
+export default function Drink({ match, isInProgress }) {
   const { params } = match;
   const { id } = params;
   const [recipeInfo, setRecipeInfo] = useState({
@@ -45,10 +46,13 @@ export default function Drink({ match }) {
       const isRecipeDone = getDoneRecipes ? getDoneRecipes
         .some((recipe) => +recipe.id === +id) : false;
       const getInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const isProggresListValid = getInProgressRecipes !== null;
+      const isProggresListValid = getInProgressRecipes !== null
+        && getInProgressRecipes !== undefined;
       const isProgressKeysValid = isProggresListValid
         ? Object.keys(getInProgressRecipes).length > 0 : false;
-      const keysInProgressList = isProggresListValid && isProgressKeysValid
+      const drinksKey = isProggresListValid
+        ? Object.keys(getInProgressRecipes).some((key) => key === 'drinks') : false;
+      const keysInProgressList = isProggresListValid && isProgressKeysValid && drinksKey
         ? Object.keys(getInProgressRecipes.drinks) : false;
       const isRecipeInProgress = keysInProgressList.length > 0 ? keysInProgressList
         .some((recipeID) => +recipeID === +id) : false;
@@ -68,6 +72,13 @@ export default function Drink({ match }) {
     };
     callApi();
   }, [id]);
+
+  if (isInProgress) {
+    return (
+      <InProgressRecipe recipe={ recipeInfo } recipeType="Drink" />
+    );
+  }
+
   return (
     <div>
       <RecipeDetails recipe={ recipeInfo } recipeType="Drink" />
@@ -81,4 +92,5 @@ Drink.propTypes = {
       id: string,
     }),
   }).isRequired,
+  isInProgress: bool.isRequired,
 };

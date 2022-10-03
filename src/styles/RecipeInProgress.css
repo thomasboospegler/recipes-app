@@ -1,0 +1,14 @@
+.ul-container label {
+  margin-left: 15px;
+  padding: 2px;
+  width: 90%;
+}
+
+.ul-container input {
+  accent-color: #fcc436;
+  margin-right: 5px;
+}
+
+label:has( input:checked ) {
+  text-decoration: line-through;
+}

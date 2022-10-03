@@ -126,3 +126,7 @@ iframe {
   background: none;
   border: none;
 }
+
+.video-container {
+  margin-bottom: 70px;
+}

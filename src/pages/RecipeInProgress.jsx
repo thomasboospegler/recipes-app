@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { shape, string } from 'prop-types';
-import '../styles/RecipeDetails.css';
 import { useHistory } from 'react-router-dom';
+import '../styles/RecipeInProgress.css';
 import copy from 'clipboard-copy';
-import fetchApi from '../services/fetchApi';
-import Card from './Card';
 import shareIcon from '../images/shareIcon.svg';
 import yellowHeart from '../images/whiteHeartIcon.svg';
 import redHeart from '../images/blackHeartIcon.svg';
 
-export default function RecipesDetails({ recipe, recipeType }) {
-  const [recomended, setRecomended] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function InProgressRecipe({ recipe, recipeType }) {
+  const [checkboxValues, setCheckboxValues] = useState([]);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const history = useHistory();
-  const name = recipeType.toLowerCase();
-  const path = `/${name}s/${recipe.id}/in-progress`;
-  const pageUrl = `http://localhost:3000${history.location.pathname}`;
   const megInterval = 2000;
+  const pathName = history.location.pathname.split('/');
+  const pageUrl = `http://localhost:3000/${pathName[1]}/${pathName[2]}`;
+  const recipetypeName = `${recipeType.toLowerCase()}s`;
 
   const saveFavaorite = () => {
     const prevFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -52,25 +51,54 @@ export default function RecipesDetails({ recipe, recipeType }) {
     setIsFavorite(true);
   };
 
+  const handleCheckbox = (e) => {
+    const { checked, name } = e.target;
+    const newCheckboxValues = [...checkboxValues];
+    newCheckboxValues[name] = !newCheckboxValues[name];
+    setCheckboxValues(newCheckboxValues);
+    const newIsCheckboxChecked = [...isCheckboxChecked];
+    newIsCheckboxChecked[name] = checked;
+    setIsCheckboxChecked(newIsCheckboxChecked);
+    const prevInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (prevInProgress) {
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...prevInProgress,
+        [recipetypeName]: {
+          ...prevInProgress[recipetypeName],
+          [recipe.id]: newCheckboxValues,
+        },
+      }));
+    }
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      [recipetypeName]: {
+        [recipe.id]: newCheckboxValues,
+      },
+    }));
+  };
+
   useEffect(() => {
-    const callApi = async () => {
-      if (recipeType === 'Meal') {
-        const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-        const data = await fetchApi(url);
-        setRecomended(data.drinks);
-      }
-      if (recipeType === 'Drink') {
-        const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-        const data = await fetchApi(url);
-        setRecomended(data.meals);
-      }
-    };
-    callApi();
-    const favoritesList = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const isRecipeFav = favoritesList ? favoritesList
+    const prevFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const isRecipeFav = prevFavorites ? prevFavorites
       .some((favRecipe) => favRecipe.id === recipe.id) : false;
-    if (isRecipeFav) setIsFavorite(true);
-  }, [recipeType, recipe.id]);
+    setIsFavorite(isRecipeFav);
+    const valuesCheckbox = recipe.ingredients
+      .filter((key) => key !== ' - null' && key !== ' - ')
+      .map(() => false);
+    const prevProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (prevProgress) {
+      const prevProgressRecipe = prevProgress[recipetypeName];
+      if (prevProgressRecipe) {
+        const prevProgressRecipeId = prevProgressRecipe[recipe.id];
+        if (prevProgressRecipeId) {
+          setIsCheckboxChecked(prevProgressRecipeId);
+          return setCheckboxValues(prevProgressRecipeId);
+        }
+      }
+    }
+    setCheckboxValues(valuesCheckbox);
+    setIsCheckboxChecked(valuesCheckbox);
+  }, [recipe, recipetypeName]);
+
   return (
     <div>
       <img
@@ -99,7 +127,6 @@ export default function RecipesDetails({ recipe, recipeType }) {
           </button>
           { copied && (
             <span>
-              { console.log('qualquer coisa') }
               Link copied!
             </span>
           )}
@@ -119,16 +146,28 @@ export default function RecipesDetails({ recipe, recipeType }) {
         <div className="content-recipe-container">
           <h2>Ingredients</h2>
           <div className="ul-container">
-            <ul>
-              { recipe.ingredients.map((ingredient, index) => (
-                <li
+            { recipe.ingredients
+              .filter((key) => key !== ' - null' && key !== ' - ')
+              .map((ingredient, index) => (
+                <label
+                  htmlFor={ index }
                   key={ index }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  className={ checkboxValues[index]
+                    ? 'checked ingredient' : 'ingredient' }
+                  data-testid={ `${index}-ingredient-step` }
                 >
+                  <input
+                    type="checkbox"
+                    id={ index }
+                    name={ index }
+                    value={ ingredient }
+                    checked={ isCheckboxChecked.length > 0
+                      ? isCheckboxChecked[index] : true }
+                    onChange={ handleCheckbox }
+                  />
                   { ingredient }
-                </li>
+                </label>
               ))}
-            </ul>
           </div>
         </div>
         <div className="instructions-container">
@@ -136,7 +175,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
           <p data-testid="instructions">{ recipe.instructions }</p>
         </div>
         { recipe.video && (
-          <div>
+          <div className="video-container">
             <h2>Video</h2>
             <iframe
               data-testid="video"
@@ -145,39 +184,21 @@ export default function RecipesDetails({ recipe, recipeType }) {
             />
           </div>
         )}
-        <div className="recomend-container">
-          <h2>Recomended</h2>
-          <div className="recomended">
-            { recomended.map((recomedRecipe, index) => {
-              const maxIndex = 6;
-
-              if (index >= maxIndex) return null;
-              return (<Card
-                key={ index }
-                recipe={ recomedRecipe }
-                recomended
-                index={ index }
-                recipeType={ recipeType === 'Meal' ? 'Drink' : 'Meal' }
-              />);
-            })}
-          </div>
-        </div>
-        { !recipe.isRecipeDone && (
-          <button
-            className="start-recipe-btn"
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => history.push(path) }
-          >
-            {recipe.isRecipeInProgress ? 'Continue Recipe' : 'Start Recipe'}
-          </button>
-        )}
+        <button
+          className="start-recipe-btn"
+          type="button"
+          data-testid="finish-recipe-btn"
+          onClick={ () => history.push('/done-recipes') }
+          disabled={ checkboxValues.some((value) => value === false) }
+        >
+          Finish Recipe
+        </button>
       </section>
     </div>
   );
 }
 
-RecipesDetails.propTypes = {
+InProgressRecipe.propTypes = {
   recipe: shape({
     strMealThumb: string,
   }).isRequired,

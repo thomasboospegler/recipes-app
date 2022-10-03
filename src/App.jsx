@@ -18,10 +18,26 @@ function App() {
         <Route exact path="/" component={ Login } />
         <Route exact path="/meals" component={ Meals } />
         <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/meals/:id" component={ Meal } />
-        <Route exact path="/drinks/:id" component={ Drink } />
-        <Route exact path="/meals/:id/in-progress" component={ NotFound } />
-        <Route exact path="/drinks/:id/in-progress" component={ NotFound } />
+        <Route
+          exact
+          path="/meals/:id"
+          render={ (props) => <Meal { ...props } isInProgress={ false } /> }
+        />
+        <Route
+          exact
+          path="/drinks/:id"
+          render={ (props) => <Drink { ...props } isInProgress={ false } /> }
+        />
+        <Route
+          exact
+          path="/meals/:id/in-progress"
+          render={ (props) => <Meal { ...props } isInProgress props={ props } /> }
+        />
+        <Route
+          exact
+          path="/drinks/:id/in-progress"
+          render={ (props) => <Drink { ...props } isInProgress props={ props } /> }
+        />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
