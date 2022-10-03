@@ -1,0 +1,14 @@
+.ul-container label {
+  width: 90%;
+  padding: 2px;
+  margin-left: 15px;
+}
+
+.ul-container input {
+  margin-right: 5px;
+  accent-color: #FCC436;
+}
+
+label:has(input[type="checkbox"]:checked) {
+  text-decoration: line-through;
+}

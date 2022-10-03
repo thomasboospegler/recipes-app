@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { shape, string } from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import '../styles/RecipeInProgress.css';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import yellowHeart from '../images/whiteHeartIcon.svg';
