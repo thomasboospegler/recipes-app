@@ -166,6 +166,13 @@ export const fetchResponseName = {
       dateModified: '2015-09-03 03:05:28',
     },
   ],
+  meals: [
+    {
+      strMeal: 'Apam balik',
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg',
+      idMeal: '53049',
+    },
+  ],
 };
 
 export const fetchResponseFirstLetter = {

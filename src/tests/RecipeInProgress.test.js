@@ -4,17 +4,15 @@ import userEvent from '@testing-library/user-event';
 import copy from 'clipboard-copy';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 import App from '../App';
-import { fetchResponseIngredient } from './mocks/fetchMealsResponse';
 
 jest.mock('clipboard-copy');
-describe('Test the DetailsRecipe Page', () => {
+describe('Test the InProgressRecipe Page', () => {
   afterEach(() => jest.clearAllMocks());
   const FAVORITE_BTN = 'favorite-btn';
-  const START_RECIPE_BTN = 'start-recipe-btn';
-  const START_BTN = 'Start Recipe';
+  const FINISH_RECIPE_BTN = 'finish-recipe-btn';
 
-  it('tests the meals DetailsRecipe page', async () => {
-    const path = '/meals/52771';
+  it('tests the meals InProgressPage page', async () => {
+    const path = '/meals/52771/in-progress';
     const initialState = {
       searchInfo: {
         radioValue: '',
@@ -32,8 +30,9 @@ describe('Test the DetailsRecipe Page', () => {
       const category = screen.getByTestId('recipe-category');
       const instructions = screen.getByTestId('instructions');
       const video = screen.getByTestId('video');
-      const ingredients = screen.getByTestId('0-ingredient-name-and-measure');
-      const start = screen.getByTestId(START_RECIPE_BTN);
+      const ingredients = screen.getByTestId('0-ingredient-step');
+      const finish = screen.getByTestId(FINISH_RECIPE_BTN);
+      const checkbox = screen.getAllByRole('checkbox')[0];
 
       expect(card).toBeInTheDocument();
       expect(title).toBeInTheDocument();
@@ -43,19 +42,18 @@ describe('Test the DetailsRecipe Page', () => {
       expect(instructions).toBeInTheDocument();
       expect(video).toBeInTheDocument();
       expect(ingredients).toBeInTheDocument();
-      expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent('Start Recipe');
+      expect(finish).toBeInTheDocument();
+      expect(checkbox).toBeInTheDocument();
+      expect(finish).toBeDisabled();
 
       userEvent.click(favorite);
       userEvent.click(favorite);
-      userEvent.click(start);
-
-      expect(history.location.pathname).toBe('/meals/52771/in-progress');
+      userEvent.click(checkbox);
     });
   });
 
-  it('tests the drinks DetailsRecipe page', async () => {
-    const path = '/drinks/17222';
+  it('tests the drinks InProgressPage page', async () => {
+    const path = '/drinks/17222/in-progress';
     const initialState = {
       searchInfo: {
         radioValue: '',
@@ -72,8 +70,8 @@ describe('Test the DetailsRecipe Page', () => {
       const favorite = screen.getByTestId(FAVORITE_BTN);
       const category = screen.getByTestId('recipe-category');
       const instructions = screen.getByTestId('instructions');
-      const ingredients = screen.getByTestId('0-ingredient-name-and-measure');
-      const start = screen.getByTestId(START_RECIPE_BTN);
+      const ingredients = screen.getByTestId('0-ingredient-step');
+      const finish = screen.getByTestId(FINISH_RECIPE_BTN);
 
       expect(card).toBeInTheDocument();
       expect(title).toBeInTheDocument();
@@ -82,13 +80,13 @@ describe('Test the DetailsRecipe Page', () => {
       expect(category).toBeInTheDocument();
       expect(instructions).toBeInTheDocument();
       expect(ingredients).toBeInTheDocument();
-      expect(start).toBeInTheDocument();
+      expect(finish).toBeInTheDocument();
     });
   });
 
   it('tests the meals DetailsRecipe page with favorites meals in localStorage', async () => {
     copy.mockImplementation(() => {});
-    const path = '/meals/52771';
+    const path = '/meals/52771/in-progress';
     const initialState = {
       searchInfo: {
         radioValue: '',
@@ -108,7 +106,7 @@ describe('Test the DetailsRecipe Page', () => {
     ]));
     localStorage.setItem('doneRecipes', JSON.stringify([
       {
-        id: '52771',
+        id: '',
         type: '',
         nationality: '',
         category: '',
@@ -119,7 +117,7 @@ describe('Test the DetailsRecipe Page', () => {
     ]));
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       meals: {
-        52771: {},
+        52771: [true, true, true, true, true, true, true, true],
       },
     }));
     const { history } = renderWithRouterAndRedux(<App />, initialState, path);
@@ -128,12 +126,12 @@ describe('Test the DetailsRecipe Page', () => {
     await waitFor(() => {
       const favorite = screen.getByTestId(FAVORITE_BTN);
       const share = screen.getByTestId('share-btn');
-      const start = screen.getByTestId(START_RECIPE_BTN);
+      const start = screen.getByTestId(FINISH_RECIPE_BTN);
+      const checkbox = screen.getAllByRole('checkbox');
 
       expect(favorite).toBeInTheDocument();
       expect(share).toBeInTheDocument();
       expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent(START_BTN);
 
       userEvent.click(favorite);
       userEvent.click(favorite);
@@ -141,12 +139,20 @@ describe('Test the DetailsRecipe Page', () => {
 
       const linkTest = screen.getByText(/link/i);
       expect(linkTest).toBeInTheDocument();
+
+      checkbox.forEach((check) => userEvent.click(check));
+
+      const finish = screen.getByTestId(FINISH_RECIPE_BTN);
+      expect(finish).toBeInTheDocument();
+      expect(finish).toBeEnabled();
+      userEvent.click(finish);
+      expect(history.location.pathname).toBe('/done-recipes');
     });
   });
 
-  it('tests the meals DetailsRecipe page with favorites meals in localStorage', async () => {
+  it('tests the meals inProgressRecipe page with favorites meals in localStorage', async () => {
     copy.mockImplementation(() => {});
-    const path = '/drinks/17203';
+    const path = '/drinks/17203/in-progress';
     const initialState = {
       searchInfo: {
         radioValue: '',
@@ -159,70 +165,13 @@ describe('Test the DetailsRecipe Page', () => {
 
     await waitFor(() => {
       const favorite = screen.getByTestId(FAVORITE_BTN);
-      const start = screen.getByTestId(START_RECIPE_BTN);
+      const start = screen.getByTestId(FINISH_RECIPE_BTN);
 
       expect(favorite).toBeInTheDocument();
       expect(start).toBeInTheDocument();
-      expect(start).toHaveTextContent(START_BTN);
 
       userEvent.click(favorite);
       userEvent.click(favorite);
-    });
-  });
-
-  it('tests the recomended card of the drinks DetailsRecipe', async () => {
-    const path = '/drinks/17222';
-    const initialState = {
-      searchInfo: {
-        radioValue: '',
-        inputValue: '',
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      drinks: {
-        52771: {},
-      },
-    }));
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(fetchResponseIngredient),
-    });
-    const { history } = renderWithRouterAndRedux(<App />, initialState, path);
-    expect(history.location.pathname).toBe(path);
-
-    await waitFor(() => {
-      const recomended = screen.getByTestId('1-recommendation-title');
-      expect(recomended).toBeInTheDocument();
-
-      const recomendedCard = screen.getByTestId('1-recommendation-card');
-      expect(recomendedCard).toBeInTheDocument();
-    });
-  });
-
-  it('tests the recomended card of the meals DetailsRecipe', async () => {
-    const path = '/meals/53049';
-    const initialState = {
-      searchInfo: {
-        radioValue: '',
-        inputValue: '',
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      meals: {
-        53049: {},
-      },
-    }));
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(fetchResponseIngredient),
-    });
-    const { history } = renderWithRouterAndRedux(<App />, initialState, path);
-    expect(history.location.pathname).toBe(path);
-
-    await waitFor(() => {
-      const recomended = screen.getByTestId('0-recommendation-title');
-      expect(recomended).toBeInTheDocument();
-
-      const recomendedCard = screen.getByTestId('0-recommendation-card');
-      expect(recomendedCard).toBeInTheDocument();
     });
   });
 });
