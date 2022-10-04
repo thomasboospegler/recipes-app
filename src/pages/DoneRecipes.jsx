@@ -15,9 +15,13 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     const getDoneStoraged = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (getDoneStoraged !== null && getDoneStoraged.length > 0) {
-      setRecipeStoraged(getDoneStoraged);
-      return setFilteredDoneRecipes(getDoneStoraged);
+    if (getDoneStoraged !== null && getDoneStoraged !== undefined) {
+      if (getDoneStoraged.length > 0) {
+        setRecipeStoraged(getDoneStoraged);
+        return setFilteredDoneRecipes(getDoneStoraged);
+      }
+      setRecipeStoraged([]);
+      return setFilteredDoneRecipes([]);
     }
     setRecipeStoraged([]);
     setFilteredDoneRecipes([]);
@@ -72,6 +76,7 @@ export default function DoneRecipes() {
       <div className="done-recipes-container">
         { filteredDoneRecipes.map(({ tags, id, image, type, name, category,
           nationality, doneDate, alcoholicOrNot }, index) => {
+          if (tags === undefined) return (<div />);
           const isMeal = tags.length > 0 && type === 'meal';
           const isDrink = tags.length > 0 && type === 'drink';
           const MAX_LENGTH = 2;
