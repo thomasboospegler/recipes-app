@@ -16,6 +16,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
   const history = useHistory();
   const name = recipeType.toLowerCase();
   const path = `/${name}s/${recipe.id}/in-progress`;
+  const pageUrl = `http://localhost:3000${history.location.pathname}`;
   const megInterval = 2000;
 
   const saveFavaorite = () => {
@@ -29,31 +30,24 @@ export default function RecipesDetails({ recipe, recipeType }) {
       return setIsFavorite(false);
     }
     const type = recipeType.toLowerCase();
+    const favObj = {
+      id: recipe.id,
+      type,
+      nationality: recipe.area ? recipe.area : '',
+      category: recipe.category ? recipe.category : '',
+      alcoholicOrNot: recipeType === 'Drink' ? recipe.strAlcoholic : '',
+      name: recipe.title,
+      image: recipe.src,
+    };
     if (prevFavorites) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([
         ...prevFavorites,
-        {
-          id: recipe.id,
-          type,
-          nationality: recipe.area ? recipe.area : '',
-          category: recipe.category ? recipe.category : '',
-          alcoholicOrNot: recipeType === 'Drink' ? recipe.strAlcoholic : '',
-          name: recipe.title,
-          image: recipe.src,
-        },
+        favObj,
       ]));
       return setIsFavorite(true);
     }
     localStorage.setItem('favoriteRecipes', JSON.stringify([
-      {
-        id: recipe.id,
-        type,
-        nationality: recipe.area ? recipe.area : '',
-        category: recipe.category ? recipe.category : '',
-        alcoholicOrNot: recipeType === 'Drink' ? recipe.strAlcoholic : '',
-        name: recipe.title,
-        image: recipe.src,
-      },
+      favObj,
     ]));
     setIsFavorite(true);
   };
@@ -96,7 +90,7 @@ export default function RecipesDetails({ recipe, recipeType }) {
             className="recipe-top-btns"
             data-testid="share-btn"
             onClick={ () => {
-              copy(`http://localhost:3000${history.location.pathname}`);
+              copy(pageUrl);
               setCopied(true);
               setTimeout(() => setCopied(false), megInterval);
             } }
@@ -188,9 +182,4 @@ RecipesDetails.propTypes = {
     strMealThumb: string,
   }).isRequired,
   recipeType: string.isRequired,
-  // match: shape({
-  //   params: shape({
-  //     id: string,
-  //   }),
-  // }).isRequired,
 };
