@@ -76,6 +76,33 @@ export default function InProgressRecipe({ recipe, recipeType }) {
     }));
   };
 
+  const handleSubmitRecipe = () => {
+    const prevDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const type = recipeType.toLowerCase();
+    const doneObj = {
+      id: recipe.id,
+      type,
+      nationality: recipe.area ? recipe.area : '',
+      category: recipe.category ? recipe.category : '',
+      alcoholicOrNot: recipeType === 'Drink' ? recipe.strAlcoholic : '',
+      name: recipe.title,
+      image: recipe.src,
+      doneDate: new Date().toLocaleDateString(),
+      tags: recipe.tags ? recipe.tags : [],
+    };
+    if (prevDoneRecipes !== null && prevDoneRecipes !== undefined) {
+      localStorage.setItem('doneRecipes', JSON.stringify([
+        ...prevDoneRecipes,
+        doneObj,
+      ]));
+      return history.push('/done-recipes');
+    }
+    localStorage.setItem('doneRecipes', JSON.stringify([
+      doneObj,
+    ]));
+    history.push('/done-recipes');
+  };
+
   useEffect(() => {
     const prevFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const isRecipeFav = prevFavorites ? prevFavorites
@@ -188,7 +215,7 @@ export default function InProgressRecipe({ recipe, recipeType }) {
           className="start-recipe-btn"
           type="button"
           data-testid="finish-recipe-btn"
-          onClick={ () => history.push('/done-recipes') }
+          onClick={ handleSubmitRecipe }
           disabled={ checkboxValues.some((value) => value === false) }
         >
           Finish Recipe
