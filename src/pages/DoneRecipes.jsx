@@ -73,6 +73,13 @@ export default function DoneRecipes() {
           />
         </button>
       </div>
+      { copied && (
+        <button type="button">
+          <span>
+            Link copied!
+          </span>
+        </button>
+      )}
       <div className="done-recipes-container">
         { filteredDoneRecipes.map(({ tags, id, image, type, name, category,
           nationality, doneDate, alcoholicOrNot }, index) => {
@@ -117,13 +124,6 @@ export default function DoneRecipes() {
                     />
                   </button>
                 </div>
-                { copied && (
-                  <button type="button">
-                    <span>
-                      Link copied!
-                    </span>
-                  </button>
-                )}
                 <p
                   data-testid={ `${index}-horizontal-done-date` }
                   className="done-date"
