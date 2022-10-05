@@ -7,9 +7,9 @@ import foods from '../images/foods.svg';
 import drinks from '../images/drinks.svg';
 import shareIcon from '../images/shareIcon.svg';
 import redHeart from '../images/blackHeartIcon.svg';
+import '../styles/FavoriteRecipes.css';
 
 export default function FavoriteRecipes() {
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [filteredFavoriteRecipes, setFilteredFavoriteRecipes] = useState([]);
   const [copied, setCopied] = useState(false);
 
@@ -23,10 +23,11 @@ export default function FavoriteRecipes() {
   };
 
   const filterFavoriteRecipes = (filterType) => {
+    const prevFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (filterType === '') {
-      return setFilteredFavoriteRecipes(favoriteRecipes);
+      return setFilteredFavoriteRecipes(prevFavorites);
     }
-    const filter = favoriteRecipes.filter(({ type }) => type === filterType);
+    const filter = prevFavorites.filter(({ type }) => type === filterType);
     setFilteredFavoriteRecipes(filter);
   };
 
@@ -37,22 +38,29 @@ export default function FavoriteRecipes() {
       && favoriteStorage !== undefined
       && favoriteStorage.length > 0
     ) {
-      setFavoriteRecipes(favoriteStorage);
       return setFilteredFavoriteRecipes(favoriteStorage);
     }
-    setFavoriteRecipes([]);
     setFilteredFavoriteRecipes([]);
   }, []);
 
   return (
     <div>
-      <Header title="Favorite Recipes" isSearchIcon={ false } />
-      <div className="done-btns-container">
+      { copied && (
+        <button
+          className="copied-btn"
+          type="button"
+        >
+          Link copied!
+        </button>
+      )}
+      <Header title="Favorite" isSearchIcon={ false } />
+      <div className="favorite-btns-container">
         <button
           type="button"
           value="All"
           data-testid="filter-by-all-btn"
           onClick={ () => filterFavoriteRecipes('') }
+          className="filter-buttons"
         >
           <img
             src={ all }
@@ -64,6 +72,7 @@ export default function FavoriteRecipes() {
           value="Meal"
           data-testid="filter-by-meal-btn"
           onClick={ () => filterFavoriteRecipes('meal') }
+          className="filter-buttons"
         >
           <img
             src={ foods }
@@ -75,6 +84,7 @@ export default function FavoriteRecipes() {
           value="Drink"
           data-testid="filter-by-drink-btn"
           onClick={ () => filterFavoriteRecipes('drink') }
+          className="filter-buttons"
         >
           <img
             src={ drinks }
@@ -82,14 +92,7 @@ export default function FavoriteRecipes() {
           />
         </button>
       </div>
-      { copied && (
-        <button type="button">
-          <span>
-            Link copied!
-          </span>
-        </button>
-      )}
-      <div>
+      <div className="recipes-container">
         { filteredFavoriteRecipes.map((recipe, index) => {
           const {
             id,
@@ -104,47 +107,51 @@ export default function FavoriteRecipes() {
           const TWO_SECONDS = 2000;
           const copyUrl = `http://localhost:3000/${type}s/${id}`;
           return (
-            <div key={ id }>
-              <Link to={ `/${type}s/${id}` }>
+            <div className="recipe-container" key={ id }>
+              <Link className="recipe-link" to={ `/${type}s/${id}` }>
                 <img
                   src={ image }
-                  alt="share-btn"
+                  alt={ `${name} img` }
                   data-testid={ `${index}-horizontal-image` }
                 />
               </Link>
-              <div>
-                <Link to={ `/${type}s/${id}` }>
-                  <p data-testid={ `${index}-horizontal-name` }>
+              <div className="recipe-description-container">
+                <Link className="recipe-name" to={ `/${type}s/${id}` }>
+                  <span data-testid={ `${index}-horizontal-name` }>
                     {name}
-                  </p>
+                  </span>
                 </Link>
-                <span data-testid={ `${index}-horizontal-top-text` }>
+                <p className="recipe-info" data-testid={ `${index}-horizontal-top-text` }>
                   {`${type === 'meal' ? nationality : alcoholicOrNot} - ${category}`}
-                </span>
-                <button
-                  type="button"
-                  onClick={ () => {
-                    copy(copyUrl);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), TWO_SECONDS);
-                  } }
-                >
-                  <img
-                    src={ shareIcon }
-                    alt="Ícone de compartilhar"
-                    data-testid={ `${index}-horizontal-share-btn` }
-                  />
-                </button>
-                <button
-                  type="button"
-                  onClick={ () => disfavorRecipe(recipe) }
-                >
-                  <img
-                    src={ redHeart }
-                    alt="Ícone de compartilhar"
-                    data-testid={ `${index}-horizontal-favorite-btn` }
-                  />
-                </button>
+                </p>
+                <div className="btn-container">
+                  <button
+                    type="button"
+                    className="share-and-favorite-btn"
+                    onClick={ () => {
+                      copy(copyUrl);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), TWO_SECONDS);
+                    } }
+                  >
+                    <img
+                      src={ shareIcon }
+                      alt="Icone de compartilhar"
+                      data-testid={ `${index}-horizontal-share-btn` }
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="share-and-favorite-btn"
+                    onClick={ () => disfavorRecipe(recipe) }
+                  >
+                    <img
+                      src={ redHeart }
+                      alt="Icone de favorito"
+                      data-testid={ `${index}-horizontal-favorite-btn` }
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           );
