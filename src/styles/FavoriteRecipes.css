@@ -1,0 +1,128 @@
+.favorite-btns-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 30px 10px;
+}
+
+.favorite-btns-container .filter-buttons {
+  background: none;
+  border: none;
+}
+
+.favorite-btns-container .filter-buttons img {
+  max-width: 70px;
+}
+
+.copied-btn:before {
+  background: black;
+  content: '';
+  display: block;
+  height: 20px;
+  position: absolute;
+  top: -20px;
+  width: 100vw;
+}
+
+.copied-btn {
+  align-items: center;
+  animation: showcopied 2.1s;
+  background: black;
+  border: none;
+  color: white;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  justify-content: center;
+  min-height: 52px;
+  position: fixed;
+  top: 20px;
+  width: 100vw;
+}
+
+@keyframes showcopied {
+
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.recipes-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 0 20px;
+}
+
+.recipe-container {
+  align-items: center;
+  border: 0.518px solid #b1b1b1;
+  border-radius: 5px;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-style: normal;
+  height: 45vw;
+  overflow: hidden;
+  width: 90vw;
+}
+
+.recipe-link {
+  max-width: 50%;
+}
+
+.recipe-container .recipe-link img {
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+.recipe-description-container {
+  padding: 25px 0 0 25px;
+}
+
+.recipe-description-container .recipe-name {
+  color: #1a1b1c;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 0px;
+}
+
+.recipe-description-container .recipe-info {
+  color: #797d86;
+  font-size: 0.7rem;
+  font-weight: 300;
+  line-height: 5px;
+  margin-top: 5px;
+}
+
+.btn-container {
+  display: flex;
+  margin-top: 40px;
+}
+
+.btn-container .share-and-favorite-btn {
+  background: none;
+  border: none;
+  padding: 10px 8px;
+}
+
+.btn-container .share-and-favorite-btn img {
+  width: 25px;
+}
