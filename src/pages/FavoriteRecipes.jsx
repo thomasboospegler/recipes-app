@@ -53,7 +53,7 @@ export default function FavoriteRecipes() {
           Link copied!
         </button>
       )}
-      <Header title="Favorite" isSearchIcon={ false } />
+      <Header title="Favorite Recipes" isSearchIcon={ false } />
       <div className="favorite-btns-container">
         <button
           type="button"
