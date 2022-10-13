@@ -142,6 +142,7 @@ export default function FavoriteRecipes() {
                   </button>
                   <button
                     type="button"
+                    data-testid={ `${index}-favorite-btn` }
                     className="share-and-favorite-btn"
                     onClick={ () => disfavorRecipe(recipe) }
                   >
