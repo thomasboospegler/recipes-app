@@ -70,6 +70,8 @@
   flex-direction: column;
   gap: 20px;
   padding: 0 0 20px;
+  height: 68vh;
+  max-height: 100%;
 }
 
 .recipe-container {
@@ -79,9 +81,10 @@
   display: flex;
   font-family: Epilogue , sans-serif;
   font-style: normal;
-  height: 45vw;
   overflow: hidden;
   width: 90vw;
+  max-width: 380px;
+  max-height: 241px;
 }
 
 .recipe-link {

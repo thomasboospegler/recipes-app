@@ -42,6 +42,7 @@ form {
   height: 50vh;
   justify-content: center;
   width: 100vw;
+  max-width: 390px;
 }
 
 form div {
@@ -73,4 +74,10 @@ form h1 {
   background-color: #fcc436;
   color: white;
   opacity: 0.9;
+}
+
+@media only screen and (min-width: 500px) {
+  form {
+    max-width: 380px;
+  }
 }

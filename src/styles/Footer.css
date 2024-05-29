@@ -6,6 +6,7 @@ footer {
   padding: 8px 30px;
   position: fixed;
   width: 100%;
+  max-width: 390px;
 }
 
 .btn-footer {
@@ -18,4 +19,10 @@ footer {
 footer button img {
   height: 30px;
   width: 60px;
+}
+
+@media only screen and (min-width: 400px) {
+  footer {
+    max-width: 380px;
+  }
 }

@@ -19,6 +19,8 @@ a {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  height: 68vh;
+  max-height: 100%;
 }
 
 .done-recipe {
@@ -27,6 +29,8 @@ a {
   border-radius: 5px;
   display: flex;
   width: 90vw;
+  max-width: 380px;
+  max-height: 241px;
 }
 
 .info-done-container {
@@ -64,6 +68,7 @@ a {
 .done-recipe img {
   border-radius: 5px 0;
   width: 45vw;
+  max-width: 240px;
 }
 
 .done-recipe button img {
